@@ -1,9 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 interface Issue {
   title: string;
@@ -61,13 +62,15 @@ const NewIssuesPage = () => {
           >
             Description
           </label>
-          <Textarea
+          <SimpleMDE
             id="description"
             value={issue.description}
-            onChange={handleInputChange}
-            placeholder="Description"
-            name="description"
-            rows={5}
+            onChange={(value) =>
+              setIssue({
+                ...issue,
+                description: value,
+              })
+            }
           />
         </div>
 
