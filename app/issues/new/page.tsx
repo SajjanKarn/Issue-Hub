@@ -1,44 +1,37 @@
 "use client";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useForm, Controller } from "react-hook-form";
 import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
 
-interface Issue {
+import axios from "axios";
+import "easymde/dist/easymde.min.css";
+import { useRouter } from "next/navigation";
+
+interface IssueForm {
   title: string;
   description: string;
 }
 
 const NewIssuesPage = () => {
-  const [issue, setIssue] = useState<Issue>({
-    title: "",
-    description: "",
-  });
-
-  const handleInputChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setIssue({
-      ...issue,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log(issue);
-  };
+  const router = useRouter();
+  const { register, control, handleSubmit } = useForm<IssueForm>();
 
   return (
     <div className="p-5">
       <h1 className="text-2xl font-semibold">Add a new issue</h1>
 
-      <form className="max-w-3xl" onSubmit={handleFormSubmit}>
+      <form
+        className="max-w-3xl"
+        onSubmit={handleSubmit(async (data) => {
+          const res = await axios.post("/api/issue", data);
+          if (res.status === 201) {
+            router.push("/issues");
+          }
+        })}
+      >
         <div className="mt-5">
           <label
             htmlFor="title"
@@ -46,13 +39,7 @@ const NewIssuesPage = () => {
           >
             Title
           </label>
-          <Input
-            placeholder="Title"
-            id="title"
-            value={issue.title}
-            onChange={handleInputChange}
-            name="title"
-          />
+          <Input placeholder="Title" {...register("title")} />
         </div>
 
         <div className="mt-5">
@@ -62,15 +49,10 @@ const NewIssuesPage = () => {
           >
             Description
           </label>
-          <SimpleMDE
-            id="description"
-            value={issue.description}
-            onChange={(value) =>
-              setIssue({
-                ...issue,
-                description: value,
-              })
-            }
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => <SimpleMDE {...field} />}
           />
         </div>
 
