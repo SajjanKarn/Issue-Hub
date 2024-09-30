@@ -1,7 +1,5 @@
-import React from "react";
+import { Skeleton } from "@/components/shared";
 import GoBackButton from "@/components/shared/GoBackButton";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 const IssueDetailLoading = () => {
   return (

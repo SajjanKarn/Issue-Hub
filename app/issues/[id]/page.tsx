@@ -5,7 +5,6 @@ import prisma from "@/prisma/client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import React from "react";
 
 interface IssueDetailProp {
   params: { id: string };

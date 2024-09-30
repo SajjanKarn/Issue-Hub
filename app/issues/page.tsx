@@ -1,6 +1,6 @@
-import React from "react";
 import prisma from "@/prisma/client";
 
+import IssueStatusBadge from "@/components/shared/IssueStatusBadge";
 import {
   Table,
   TableBody,
@@ -9,9 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import IssueStatusBadge from "@/components/shared/IssueStatusBadge";
-import IssueActions from "./IssueActions";
 import Link from "next/link";
+import IssueActions from "./IssueActions";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();

@@ -1,5 +1,4 @@
-import React from "react";
-import Skeleton from "react-loading-skeleton";
+import { Skeleton } from "@/components/shared";
 import {
   Table,
   TableBody,
@@ -8,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import "react-loading-skeleton/dist/skeleton.css";
 import IssueActions from "./IssueActions";
 
 const IssueListLoading = () => {
