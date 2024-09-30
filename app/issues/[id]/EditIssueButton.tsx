@@ -6,7 +6,7 @@ import { AiFillEdit } from "react-icons/ai";
 const EditIssueButton = ({ issue }: { issue: Issue }) => {
   return (
     <Link href={`/issues/${issue.id}/edit`}>
-      <Button className="flex gap-x-1">
+      <Button className="flex w-[100%] gap-x-1">
         <AiFillEdit />
         Edit
       </Button>

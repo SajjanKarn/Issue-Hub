@@ -16,8 +16,8 @@ const IssueDetails = ({ issue }: { issue: Issue }) => {
         </div>
       </div>
 
-      <div className="mt-3 prose">
-        <Card className="prose p-5">
+      <div className="mt-3">
+        <Card className="prose max-w-full p-5">
           <ReactMarkdown>{issue.description}</ReactMarkdown>
         </Card>
       </div>

@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
+import DeleteIssueButton from "./DeleteIssueButton";
 
 interface IssueDetailProp {
   params: { id: string };
@@ -25,12 +26,15 @@ const IssueDetailPage = async ({ params: { id } }: IssueDetailProp) => {
       <Link href="/issues">
         <Button variant="destructive">Go Back</Button>
       </Link>
-      <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-        <div>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+        <div className="col-span-2">
           <IssueDetails issue={issue} />
         </div>
         <div>
-          <EditIssueButton issue={issue} />
+          <div className="flex flex-col lg:flex-row gap-3">
+            <EditIssueButton issue={issue} />
+            <DeleteIssueButton issue={issue} />
+          </div>
         </div>
       </div>
     </div>
