@@ -12,7 +12,7 @@ import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
 
@@ -38,6 +38,13 @@ const IssueForm = ({ issue }: IssueFormProp) => {
   const onSubmit = handleSubmit(async (data) => {
     setIsSubmitting(true);
     try {
+      if (issue) {
+        const res = await axios.patch(`/api/issue/${issue.id}`, data);
+        if (res.status === 200) {
+          router.push(`/issues/${issue.id}`);
+        }
+        return;
+      }
       const res = await axios.post("/api/issue", data);
       if (res.status === 201) {
         router.push("/issues");
@@ -103,8 +110,8 @@ const IssueForm = ({ issue }: IssueFormProp) => {
             className="flex gap-x-3"
             disabled={isSubmitting}
           >
-            <AiOutlinePlus />
-            Add Issue
+            {issue ? <AiOutlineEdit /> : <AiOutlinePlus />}
+            {issue ? "Update Issue" : "Create Issue"}
             {isSubmitting && <Spinner />}
           </Button>
         </div>
