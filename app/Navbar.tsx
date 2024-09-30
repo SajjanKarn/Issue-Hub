@@ -4,6 +4,15 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiFillBug } from "react-icons/ai";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Link {
   titile: string;
@@ -49,7 +58,26 @@ const Navbar = () => {
       </div>
       <div>
         {status === "authenticated" && (
-          <Link href="/api/auth/signout">Sign Out</Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarImage src={data.user?.image as string} />
+                <AvatarFallback>{data.user?.name}</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mr-2 p-3">
+              <DropdownMenuLabel className="text-center">
+                {data.user?.name}
+              </DropdownMenuLabel>
+              <p className="text-sm text-gray-500">{data.user?.email}</p>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer">
+                <Link href="/api/auth/signout" className="text-red-500">
+                  Logout
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
         {status === "unauthenticated" && (
           <Link href="/api/auth/signin">Sign In</Link>
