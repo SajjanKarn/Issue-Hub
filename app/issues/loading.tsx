@@ -11,7 +11,7 @@ import {
 import "react-loading-skeleton/dist/skeleton.css";
 import IssueActions from "./IssueActions";
 
-const Loading = () => {
+const IssueListLoading = () => {
   const issues = [1, 2, 3, 4, 5];
   return (
     <div className="p-5">
@@ -51,4 +51,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default IssueListLoading;
