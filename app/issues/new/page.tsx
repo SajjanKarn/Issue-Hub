@@ -31,6 +31,21 @@ const NewIssuesPage = () => {
   const [error, setError] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
+  const onSubmit = handleSubmit(async (data) => {
+    setIsSubmitting(true);
+    try {
+      const res = await axios.post("/api/issue", data);
+      if (res.status === 201) {
+        router.push("/issues");
+      }
+      // eslint-disable-next-line
+    } catch (err) {
+      setError("An error occurred while creating the issue.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  });
+
   return (
     <div className="p-5">
       <h1 className="text-2xl font-semibold">Add a new issue</h1>
@@ -46,23 +61,7 @@ const NewIssuesPage = () => {
         </div>
       )}
 
-      <form
-        className="max-w-3xl"
-        onSubmit={handleSubmit(async (data) => {
-          setIsSubmitting(true);
-          try {
-            const res = await axios.post("/api/issue", data);
-            if (res.status === 201) {
-              router.push("/issues");
-            }
-            // eslint-disable-next-line
-          } catch (err) {
-            setError("An error occurred while creating the issue.");
-          } finally {
-            setIsSubmitting(false);
-          }
-        })}
-      >
+      <form className="max-w-3xl" onSubmit={onSubmit}>
         <div className="mt-5">
           <label
             htmlFor="title"
