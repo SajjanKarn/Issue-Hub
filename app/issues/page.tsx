@@ -11,12 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import IssueStatusBadge from "@/components/shared/IssueStatusBadge";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
 
   return (
-    <div className="p-3">
+    <div className="p-5">
       <div className="mb-5">
         <Link href="/issues/new">
           <Button>New Issue</Button>
@@ -25,24 +26,26 @@ const IssuesPage = async () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>ISSUE</TableHead>
-            <TableHead className="hidden md:table-cell">STATUS</TableHead>
-            <TableHead className="hidden md:table-cell">CREATED AT</TableHead>
+            <TableHead className="font-bold text-black">ISSUE</TableHead>
+            <TableHead className="hidden md:table-cell md:font-bold md:text-black">
+              STATUS
+            </TableHead>
+            <TableHead className="hidden md:table-cell md:font-bold md:text-black">
+              CREATED AT
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {issues.map((issue) => (
             <TableRow key={issue.id}>
-              <TableCell className="font-medium">
+              <TableCell>
                 {issue.title}
-                <p className="my-1 md:hidden">
-                  <span className="bg-gray-100 p-1 my-1 rounded-sm">
-                    {issue.status}
-                  </span>
-                </p>
+                <div className="md:hidden">
+                  <IssueStatusBadge status={issue.status} />
+                </div>
               </TableCell>
               <TableCell className="hidden md:table-cell">
-                {issue.status}
+                <IssueStatusBadge status={issue.status} />
               </TableCell>
               <TableCell className="hidden md:table-cell">
                 {issue.createdAt.toDateString()}
