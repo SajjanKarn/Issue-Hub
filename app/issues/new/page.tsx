@@ -8,6 +8,8 @@ import SimpleMDE from "react-simplemde-editor";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import ErrorMessage from "@/components/shared/ErrorMessage";
+import Spinner from "@/components/shared/Spinner";
 
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
@@ -27,6 +29,7 @@ const NewIssuesPage = () => {
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = React.useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   return (
     <div className="p-5">
@@ -46,13 +49,17 @@ const NewIssuesPage = () => {
       <form
         className="max-w-3xl"
         onSubmit={handleSubmit(async (data) => {
+          setIsSubmitting(true);
           try {
             const res = await axios.post("/api/issue", data);
             if (res.status === 201) {
               router.push("/issues");
             }
+            // eslint-disable-next-line
           } catch (err) {
             setError("An error occurred while creating the issue.");
+          } finally {
+            setIsSubmitting(false);
           }
         })}
       >
@@ -64,9 +71,7 @@ const NewIssuesPage = () => {
             Title
           </label>
           <Input placeholder="Title" {...register("title")} />
-          {errors.title && (
-            <p className="text-red-500 text-sm my-2">{errors.title.message}</p>
-          )}
+          {errors.title && <ErrorMessage>{errors.title.message}</ErrorMessage>}
         </div>
 
         <div className="mt-5">
@@ -82,16 +87,19 @@ const NewIssuesPage = () => {
             render={({ field }) => <SimpleMDE {...field} />}
           />
           {errors.description && (
-            <p className="text-red-500 text-sm my-2">
-              {errors.description.message}
-            </p>
+            <ErrorMessage>{errors.description.message}</ErrorMessage>
           )}
         </div>
 
         <div className="mt-5">
-          <Button type="submit">
+          <Button
+            type="submit"
+            className="flex gap-x-3"
+            disabled={isSubmitting}
+          >
             <AiOutlinePlus />
             Add Issue
+            {isSubmitting && <Spinner />}
           </Button>
         </div>
       </form>
