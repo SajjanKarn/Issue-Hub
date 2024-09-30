@@ -14,6 +14,8 @@ const EditIssuePage = async ({ params: { id } }: EditIssuePageProp) => {
     where: { id: parseInt(id) },
   });
 
+  if (!issue) notFound();
+
   return (
     <div className="p-5">
       <GoBackButton href={`/issues/${id}`} />

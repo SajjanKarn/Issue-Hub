@@ -4,7 +4,7 @@ import Spinner from "@/components/shared/Spinner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import createIssueSchema from "@/schemas/validationSchema";
+import issueSchema from "@/schemas/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Issue } from "@prisma/client";
 import axios from "axios";
@@ -16,7 +16,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import SimpleMDE from "react-simplemde-editor";
 import { z } from "zod";
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 interface IssueFormProp {
   issue?: Issue;
@@ -30,7 +30,7 @@ const IssueForm = ({ issue }: IssueFormProp) => {
     handleSubmit,
     formState: { errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
   const [error, setError] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
