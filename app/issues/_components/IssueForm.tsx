@@ -14,6 +14,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AiOutlineEdit, AiOutlinePlus } from "react-icons/ai";
 import SimpleMDE from "react-simplemde-editor";
+
 import { z } from "zod";
 
 type IssueFormData = z.infer<typeof issueSchema>;
@@ -48,6 +49,7 @@ const IssueForm = ({ issue }: IssueFormProp) => {
       const res = await axios.post("/api/issue", data);
       if (res.status === 201) {
         router.push("/issues");
+        router.refresh();
       }
       // eslint-disable-next-line
     } catch (err) {

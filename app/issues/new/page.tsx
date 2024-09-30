@@ -1,6 +1,11 @@
-import React from "react";
-import IssueForm from "../_components/IssueForm";
 import { GoBackButton } from "@/components/shared";
+import dynamic from "next/dynamic";
+import IssueFormLoading from "../_components/IssueFormLoading";
+
+const IssueForm = dynamic(() => import("../_components/IssueForm"), {
+  ssr: false,
+  loading: () => <IssueFormLoading />,
+});
 
 const NewIssueForm = () => {
   return (

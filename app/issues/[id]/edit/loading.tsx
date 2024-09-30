@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/shared";
 
-const NewIssueLoading = async () => {
+const EditIssueLoading = () => {
   return (
     <div className="max-w-3xl p-5">
       <div className="mt-5">
@@ -13,4 +13,4 @@ const NewIssueLoading = async () => {
   );
 };
 
-export default NewIssueLoading;
+export default EditIssueLoading;

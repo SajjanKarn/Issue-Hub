@@ -17,7 +17,7 @@ const IssueDetailLoading = () => {
         </div>
       </div>
 
-      <div className="mt-3 prose">
+      <div className="mt-3">
         <Skeleton count={5} />
       </div>
     </div>

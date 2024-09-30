@@ -1,7 +1,13 @@
 import { GoBackButton } from "@/components/shared";
 import prisma from "@/prisma/client";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
-import IssueForm from "../../_components/IssueForm";
+import IssueFormLoading from "../../_components/IssueFormLoading";
+
+const IssueForm = dynamic(() => import("../../_components/IssueForm"), {
+  ssr: false,
+  loading: () => <IssueFormLoading />,
+});
 
 interface EditIssuePageProp {
   params: { id: string };
