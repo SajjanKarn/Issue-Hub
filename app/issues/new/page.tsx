@@ -6,19 +6,26 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useForm, Controller } from "react-hook-form";
 import SimpleMDE from "react-simplemde-editor";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
+import createIssueSchema from "@/schemas/validationSchema";
 
-interface IssueForm {
-  title: string;
-  description: string;
-}
+type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuesPage = () => {
   const router = useRouter();
-  const { register, control, handleSubmit } = useForm<IssueForm>();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({
+    resolver: zodResolver(createIssueSchema),
+  });
   const [error, setError] = React.useState<string | null>(null);
 
   return (
@@ -57,6 +64,9 @@ const NewIssuesPage = () => {
             Title
           </label>
           <Input placeholder="Title" {...register("title")} />
+          {errors.title && (
+            <p className="text-red-500 text-sm my-2">{errors.title.message}</p>
+          )}
         </div>
 
         <div className="mt-5">
@@ -71,6 +81,11 @@ const NewIssuesPage = () => {
             control={control}
             render={({ field }) => <SimpleMDE {...field} />}
           />
+          {errors.description && (
+            <p className="text-red-500 text-sm my-2">
+              {errors.description.message}
+            </p>
+          )}
         </div>
 
         <div className="mt-5">
