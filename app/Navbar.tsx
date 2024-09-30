@@ -22,7 +22,8 @@ const Navbar = () => {
       <div className="flex items-center gap-2 justify-center">
         <AiFillBug size={30} color="#B8001F" />
         <span className="font-bold">
-          Issue<span className="bg-yellow-500 px-1 rounded-sm">Hub</span>
+          Issue
+          <span className="bg-red-500 px-1 rounded-sm text-white">Hub</span>
         </span>
       </div>
       <div>
