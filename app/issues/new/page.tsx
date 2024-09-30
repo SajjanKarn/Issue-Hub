@@ -15,6 +15,7 @@ import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
 import createIssueSchema from "@/schemas/validationSchema";
+import Link from "next/link";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -48,7 +49,11 @@ const NewIssuesPage = () => {
 
   return (
     <div className="p-5">
-      <h1 className="text-2xl font-semibold">Add a new issue</h1>
+      <Link href="/issues">
+        <Button variant="destructive">Go Back</Button>
+      </Link>
+
+      <h1 className="text-2xl font-semibold mt-3">Add a new issue</h1>
 
       {error && (
         <div className="max-w-3xl mt-2">
