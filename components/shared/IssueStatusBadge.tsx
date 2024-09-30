@@ -11,7 +11,7 @@ const statusMap: Record<
   CLOSED: { label: "Closed", color: "green-700" },
 };
 
-const generateBackground = (status: Status) => {
+const generateBackground = (status: Status): string => {
   switch (status) {
     case "OPEN":
       return "bg-red-500 hover:bg-red-600";

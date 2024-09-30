@@ -1,21 +1,21 @@
 "use client";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { AiOutlinePlus } from "react-icons/ai";
-import { useForm, Controller } from "react-hook-form";
-import SimpleMDE from "react-simplemde-editor";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import ErrorMessage from "@/components/shared/ErrorMessage";
 import Spinner from "@/components/shared/Spinner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { AiOutlinePlus } from "react-icons/ai";
+import SimpleMDE from "react-simplemde-editor";
+import { z } from "zod";
 
+import GoBackButton from "@/components/shared/GoBackButton";
+import createIssueSchema from "@/schemas/validationSchema";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 import { useRouter } from "next/navigation";
-import createIssueSchema from "@/schemas/validationSchema";
-import Link from "next/link";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -49,9 +49,7 @@ const NewIssuesPage = () => {
 
   return (
     <div className="p-5">
-      <Link href="/issues">
-        <Button variant="destructive">Go Back</Button>
-      </Link>
+      <GoBackButton href="/issues" />
 
       <h1 className="text-2xl font-semibold mt-3">Add a new issue</h1>
 
