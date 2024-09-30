@@ -14,6 +14,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiFillBug } from "react-icons/ai";
 
+import Skeleton from "@/components/shared/Skeleton";
+
 interface Link {
   titile: string;
   url: string;
@@ -68,7 +70,8 @@ const NavLinks = () => {
 const AuthStatus = () => {
   const { status, data } = useSession();
 
-  if (status === "loading") return null;
+  if (status === "loading")
+    return <Skeleton width="2rem" height="2rem" className="rounded-full" />;
 
   if (status === "unauthenticated")
     return <Link href="/api/auth/signin">Sign In</Link>;
