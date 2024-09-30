@@ -1,5 +1,6 @@
 "use client";
 import classnames from "classnames";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AiFillBug } from "react-icons/ai";
@@ -15,6 +16,7 @@ const links: Link[] = [
 ];
 
 const Navbar = () => {
+  const { status, data } = useSession();
   const currentPath = usePathname();
 
   return (
@@ -42,6 +44,14 @@ const Navbar = () => {
             {link.titile}
           </Link>
         ))}
+      </div>
+      <div>
+        {status === "authenticated" && (
+          <Link href="/api/auth/signout">Sign Out</Link>
+        )}
+        {status === "unauthenticated" && (
+          <Link href="/api/auth/signin">Sign In</Link>
+        )}
       </div>
     </div>
   );
