@@ -18,12 +18,14 @@ const Navbar = () => {
   const currentPath = usePathname();
 
   return (
-    <div className="flex items-center gap-x-5 bg-gray-200 p-5">
+    <div className="flex items-center gap-x-5 border shadow p-5">
       <div className="flex items-center gap-2 justify-center">
         <AiFillBug size={30} color="#B8001F" />
         <span className="font-bold">
           Issue
-          <span className="bg-red-500 px-1 rounded-sm text-white">Hub</span>
+          <span className="ml-[0.5px] bg-red-500 px-1 rounded-sm text-white">
+            Hub
+          </span>
         </span>
       </div>
       <div>
