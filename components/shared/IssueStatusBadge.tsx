@@ -11,13 +11,20 @@ const statusMap: Record<
   CLOSED: { label: "Closed", color: "green-700" },
 };
 
+const generateBackground = (status: Status) => {
+  switch (status) {
+    case "OPEN":
+      return "bg-red-500 hover:bg-red-600";
+    case "IN_PROGRESS":
+      return "bg-violet-500 hover:bg-violet-600";
+    case "CLOSED":
+      return "bg-green-700 hover:bg-green-800";
+  }
+};
+
 const IssueStatusBadge = ({ status }: { status: Status }) => {
   return (
-    <Badge
-      className={`bg-${statusMap[status].color} hover:bg-${
-        statusMap[status].color.split("-")[0]
-      }-${Number(statusMap[status].color.split("-")[1]) + 100}`}
-    >
+    <Badge className={`${generateBackground(status)}`}>
       {statusMap[status].label}
     </Badge>
   );
