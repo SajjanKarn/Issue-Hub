@@ -1,4 +1,5 @@
 "use client";
+import { Spinner } from "@/components/shared";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,8 +21,11 @@ import { AiFillDelete } from "react-icons/ai";
 const DeleteIssueButton = ({ issue }: { issue: Issue }) => {
   const router = useRouter();
   const [error, setError] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const deleteIssue = async () => {
+    setIsDeleting(true);
+
     try {
       const response = await axios.delete(`/api/issue/${issue.id}`);
       if (response.status === 200) {
@@ -31,6 +35,8 @@ const DeleteIssueButton = ({ issue }: { issue: Issue }) => {
       // eslint-disable-next-line
     } catch (error) {
       setError(true);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -38,9 +44,13 @@ const DeleteIssueButton = ({ issue }: { issue: Issue }) => {
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button className="flex gap-x-1" variant="destructive">
-            <AiFillDelete />
-            Delete
+          <Button
+            className="flex gap-x-1"
+            variant="destructive"
+            disabled={isDeleting}
+          >
+            {isDeleting ? <Spinner /> : <AiFillDelete />}
+            {isDeleting ? "Deleting..." : "Delete"}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
