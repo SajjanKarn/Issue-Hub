@@ -1,7 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Issue } from "@prisma/client";
-import Link from "next/link";
-import { AiFillDelete } from "react-icons/ai";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,6 +9,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Issue } from "@prisma/client";
+import { AiFillDelete } from "react-icons/ai";
 
 const DeleteIssueButton = ({ issue }: { issue: Issue }) => {
   return (
