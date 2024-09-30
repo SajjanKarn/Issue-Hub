@@ -1,6 +1,5 @@
 import React from "react";
-import prisma from "@/prisma/client";
-
+import Skeleton from "react-loading-skeleton";
 import {
   Table,
   TableBody,
@@ -9,12 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import IssueStatusBadge from "@/components/shared/IssueStatusBadge";
+import "react-loading-skeleton/dist/skeleton.css";
 import IssueActions from "./IssueActions";
 
-const IssuesPage = async () => {
-  const issues = await prisma.issue.findMany();
-
+const Loading = () => {
+  const issues = [1, 2, 3, 4, 5];
   return (
     <div className="p-5">
       <IssueActions />
@@ -32,18 +30,18 @@ const IssuesPage = async () => {
         </TableHeader>
         <TableBody>
           {issues.map((issue) => (
-            <TableRow key={issue.id}>
+            <TableRow key={issue}>
               <TableCell>
-                {issue.title}
+                <Skeleton />
                 <div className="md:hidden">
-                  <IssueStatusBadge status={issue.status} />
+                  <Skeleton />
                 </div>
               </TableCell>
               <TableCell className="hidden md:table-cell">
-                <IssueStatusBadge status={issue.status} />
+                <Skeleton />
               </TableCell>
               <TableCell className="hidden md:table-cell">
-                {issue.createdAt.toDateString()}
+                <Skeleton />
               </TableCell>
             </TableRow>
           ))}
@@ -53,4 +51,4 @@ const IssuesPage = async () => {
   );
 };
 
-export default IssuesPage;
+export default Loading;
