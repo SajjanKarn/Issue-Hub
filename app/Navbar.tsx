@@ -82,7 +82,10 @@ const AuthStatus = () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src={data.user?.image as string} />
+              <AvatarImage
+                src={data.user?.image as string}
+                referrerPolicy="no-referrer"
+              />
               <AvatarFallback>{data.user?.name}</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>

@@ -9,6 +9,7 @@ import IssueDetails from "./IssueDetails";
 import DeleteIssueButton from "./DeleteIssueButton";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
+import AssignUserGroup from "./AssignUserGroup";
 
 interface IssueDetailProp {
   params: { id: string };
@@ -34,9 +35,10 @@ const IssueDetailPage = async ({ params: { id } }: IssueDetailProp) => {
           <IssueDetails issue={issue} />
         </div>
         <div>
-          <div className="flex flex-col lg:flex-row gap-3">
+          <div className="flex flex-col xl:flex-row gap-3">
             {session && (
               <>
+                <AssignUserGroup />
                 <EditIssueButton issue={issue} />
                 <DeleteIssueButton issue={issue} />
               </>
