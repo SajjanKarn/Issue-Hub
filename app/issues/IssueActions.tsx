@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
@@ -7,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 const statuses: { label: string; value?: string }[] = [
   { label: "All", value: "ALL" },
@@ -16,11 +18,18 @@ const statuses: { label: string; value?: string }[] = [
 ];
 
 const IssueActions = () => {
+  const router = useRouter();
+
   return (
     <div>
       <div className="mb-5 flex justify-between items-center">
         <div>
-          <Select>
+          <Select
+            onValueChange={(value) => {
+              const status = value === "ALL" ? "" : `?status=${value}`;
+              router.push("/issues" + status);
+            }}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Filter by status...  " />
             </SelectTrigger>

@@ -11,9 +11,42 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import IssueActions from "./IssueActions";
+import { Issue, Status } from "@prisma/client";
+import { AiOutlineArrowUp } from "react-icons/ai";
 
-const IssuesPage = async () => {
-  const issues = await prisma.issue.findMany();
+interface IssuePageProps {
+  searchParams: { status: Status; orderBy: keyof Issue };
+}
+
+const columns: { label: string; value: keyof Issue; className?: string }[] = [
+  {
+    label: "ISSUE",
+    value: "title",
+    className: "font-bold text-black",
+  },
+  {
+    label: "STATUS",
+    value: "status",
+    className: "hidden md:table-cell md:font-bold md:text-black",
+  },
+  {
+    label: "CREATED AT",
+    value: "createdAt",
+    className: "hidden md:table-cell md:font-bold md:text-black",
+  },
+];
+
+const IssuesPage = async ({ searchParams }: IssuePageProps) => {
+  const statusList = Object.values(Status);
+  const validStatus = statusList.includes(searchParams.status)
+    ? searchParams.status
+    : undefined;
+
+  const issues = await prisma.issue.findMany({
+    where: {
+      status: validStatus,
+    },
+  });
 
   return (
     <div className="p-5 lg:px-10">
@@ -22,13 +55,25 @@ const IssuesPage = async () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="font-bold text-black">ISSUE</TableHead>
-              <TableHead className="hidden md:table-cell md:font-bold md:text-black">
-                STATUS
-              </TableHead>
-              <TableHead className="hidden md:table-cell md:font-bold md:text-black">
-                CREATED AT
-              </TableHead>
+              {columns.map((column) => (
+                <TableHead key={column.label} className={column.className}>
+                  <Link
+                    href={{
+                      query: {
+                        ...searchParams,
+                        orderBy: column.value,
+                      },
+                    }}
+                  >
+                    <div className="flex gap-1 items-center">
+                      {column.label}
+                      {column.value === searchParams.orderBy && (
+                        <AiOutlineArrowUp />
+                      )}
+                    </div>
+                  </Link>
+                </TableHead>
+              ))}
             </TableRow>
           </TableHeader>
           <TableBody>
