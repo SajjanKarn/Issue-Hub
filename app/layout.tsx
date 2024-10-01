@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Navbar";
 import AuthProvider from "./auth/AuthProvider";
+import QueryClientProviderWrapper from "./QueryClientProvider";
 
 export const metadata: Metadata = {
   title: "Issue Hub",
@@ -23,10 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className}`}>
-        <AuthProvider>
-          <Navbar />
-          <main>{children}</main>
-        </AuthProvider>
+        <QueryClientProviderWrapper>
+          <AuthProvider>
+            <Navbar />
+            <main>{children}</main>
+          </AuthProvider>
+        </QueryClientProviderWrapper>
       </body>
     </html>
   );
