@@ -16,7 +16,7 @@ const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
 
   return (
-    <div className="p-5">
+    <div className="p-5 lg:px-10">
       <IssueActions />
       {issues.length > 0 ? (
         <Table>
