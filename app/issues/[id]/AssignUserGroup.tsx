@@ -7,11 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { User } from "@prisma/client";
+import { Issue, User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const AssignUserGroup = () => {
+const AssignUserGroup = ({ issue }: { issue: Issue }) => {
   const {
     data: users,
     error,
@@ -28,12 +28,20 @@ const AssignUserGroup = () => {
   if (error) return null;
 
   return (
-    <Select>
+    <Select
+      onValueChange={(userId) => {
+        axios.patch(`/api/issue/${issue.id}`, {
+          assignedToUserId: userId === "null" ? null : userId,
+        });
+      }}
+      defaultValue={issue.assignedToUserId || "null"}
+    >
       <SelectTrigger className="w-full xl:w-[200px]">
         <SelectValue placeholder="Assign a user..." />
       </SelectTrigger>
       <SelectContent>
         <p className="p-2 text-xs text-gray-500">Suggestions</p>
+        <SelectItem value="null">Unassign</SelectItem>
         {users?.map((user) => (
           <SelectItem key={user.id} value={user.id}>
             {user.name}

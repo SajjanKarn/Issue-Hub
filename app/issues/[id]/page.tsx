@@ -38,7 +38,7 @@ const IssueDetailPage = async ({ params: { id } }: IssueDetailProp) => {
           <div className="flex flex-col xl:flex-row gap-3">
             {session && (
               <>
-                <AssignUserGroup />
+                <AssignUserGroup issue={issue} />
                 <EditIssueButton issue={issue} />
                 <DeleteIssueButton issue={issue} />
               </>
