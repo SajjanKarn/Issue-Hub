@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Issue, User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 const AssignUserGroup = ({ issue }: { issue: Issue }) => {
@@ -29,10 +30,22 @@ const AssignUserGroup = ({ issue }: { issue: Issue }) => {
 
   return (
     <Select
-      onValueChange={(userId) => {
-        axios.patch(`/api/issue/${issue.id}`, {
-          assignedToUserId: userId === "null" ? null : userId,
-        });
+      onValueChange={async (userId) => {
+        try {
+          const result = await axios.patch(`/api/issue/${issue.id}`, {
+            assignedToUserId: userId === "null" ? null : userId,
+          });
+          if (result.status === 200 && userId === "null") {
+            toast.success("User unassigned successfully");
+            return;
+          }
+          if (result.status === 200) {
+            toast.success("User assigned successfully");
+          }
+          // eslint-disable-next-line
+        } catch (error) {
+          toast.error("Failed to assign user");
+        }
       }}
       defaultValue={issue.assignedToUserId || "null"}
     >
@@ -48,6 +61,7 @@ const AssignUserGroup = ({ issue }: { issue: Issue }) => {
           </SelectItem>
         ))}
       </SelectContent>
+      <Toaster />
     </Select>
   );
 };
