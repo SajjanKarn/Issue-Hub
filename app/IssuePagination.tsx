@@ -39,7 +39,7 @@ const IssuePagination = ({
 
   return (
     <div className="text-center flex flex-col gap-3">
-      <p>
+      <p className="text-sm">
         Showing {currentPage} out of {totalPage} pages
       </p>
 
