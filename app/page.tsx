@@ -21,10 +21,14 @@ const Home = async () => {
   });
 
   return (
-    <div className="p-5 lg:p-10">
-      <IssueSummary open={open} inProgress={inProgress} closed={closed} />
-      <IssueChart open={open} inProgress={inProgress} closed={closed} />
-      <LatestIssues />
+    <div className="p-5 grid grid-cols-1 gap-3 xl:grid-cols-3 lg:p-10 overflow-x-hidden">
+      <div className="xl:col-span-1">
+        <IssueSummary open={open} inProgress={inProgress} closed={closed} />
+        <IssueChart open={open} inProgress={inProgress} closed={closed} />
+      </div>
+      <div className="xl:col-span-2">
+        <LatestIssues />
+      </div>
     </div>
   );
 };
