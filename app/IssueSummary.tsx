@@ -22,7 +22,7 @@ const IssueSummary = ({ open, inProgress, closed }: IssueSummaryProps) => {
   ];
 
   return (
-    <div className="flex gap-3 mb-5">
+    <div className="flex flex-col md:flex-row md:justify-normal gap-3 mb-5">
       {statuses.map((status) => (
         <Card key={status.label} className="max-w-[200px]">
           <CardHeader>

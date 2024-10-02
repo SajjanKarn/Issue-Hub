@@ -1,6 +1,5 @@
-import React from "react";
-import { Status } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
+import { Status } from "@prisma/client";
 
 const statusMap: Record<
   Status,
