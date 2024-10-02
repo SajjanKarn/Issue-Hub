@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const statuses: { label: string; value?: string }[] = [
   { label: "All", value: "ALL" },
@@ -19,15 +19,23 @@ const statuses: { label: string; value?: string }[] = [
 
 const IssueActions = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   return (
     <div>
       <div className="mb-5 flex justify-between items-center">
         <div>
           <Select
-            onValueChange={(value) => {
-              const status = value === "ALL" ? "" : `?status=${value}`;
-              router.push("/issues" + status);
+            defaultValue={searchParams.get("status") || "ALL"}
+            onValueChange={(status) => {
+              const params = new URLSearchParams();
+              if (status) params.append("status", status);
+              if (searchParams.get("orderBy"))
+                params.append("orderBy", searchParams.get("orderBy") as string);
+
+              const query = params.size ? `?${params.toString()}` : "";
+
+              router.push("/issues" + query);
             }}
           >
             <SelectTrigger>
