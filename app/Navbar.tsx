@@ -22,7 +22,7 @@ interface Link {
 }
 
 const links: Link[] = [
-  { titile: "Home", url: "/" },
+  { titile: "Dashboard", url: "/" },
   { titile: "Issues", url: "/issues" },
 ];
 
