@@ -14,6 +14,7 @@ import IssueActions from "./IssueActions";
 import { Issue, Status } from "@prisma/client";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import IssuePagination from "../IssuePagination";
+import { Metadata } from "next";
 
 interface IssuePageProps {
   searchParams: { status: Status; orderBy: keyof Issue; page: string };
@@ -129,5 +130,10 @@ const IssuesPage = async ({ searchParams }: IssuePageProps) => {
 };
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "IssueHub | Issues",
+  description: "View all issues published on IssueHub.",
+};
 
 export default IssuesPage;
