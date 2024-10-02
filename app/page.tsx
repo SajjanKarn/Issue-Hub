@@ -1,13 +1,9 @@
-import IssuePagination from "./IssuePagination";
+import LatestIssues from "./LatestIssues";
 
 const Home = ({ searchParams }: { searchParams: { page: string } }) => {
   return (
-    <div>
-      <IssuePagination
-        totalItems={100}
-        itemsPerPage={10}
-        currentPage={parseInt(searchParams.page)}
-      />
+    <div className="p-5 lg:p-10">
+      <LatestIssues />
     </div>
   );
 };
